@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ahnaf Akif | Python, Web Scraping and Web Security</title>
+<meta name="description" content="Python developer offering web scraping, data extraction, automation, web penetration testing and ISO 27001 gap assessments.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f8fb; --surface: #ffffff; --text: #0f172a; --muted: #55607a;
+  --line: #e3e7ef; --accent: #1d4ed8; --accent-soft: #e8efff; --good: #15803d;
+  --hero-a: #0b1220; --hero-b: #13213d; --hero-text: #f8fafc; --hero-muted: #b6c2d9; --hero-accent: #4ade80;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1020; --surface: #121a2e; --text: #e8edf7; --muted: #9aa6bf;
+    --line: #22304d; --accent: #7aa2ff; --accent-soft: #1a2747; --good: #4ade80;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b1020; --surface: #121a2e; --text: #e8edf7; --muted: #9aa6bf;
+  --line: #22304d; --accent: #7aa2ff; --accent-soft: #1a2747; --good: #4ade80;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font: 16px/1.6 Inter, system-ui, sans-serif; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+.hero { background: radial-gradient(circle at 85% 10%, #1d4ed8 0%, transparent 45%), linear-gradient(135deg, var(--hero-a), var(--hero-b)); color: var(--hero-text); }
+nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; gap: 16px; }
+nav .brand { font-weight: 800; letter-spacing: -.01em; color: var(--hero-text); }
+nav .links { display: flex; gap: 20px; flex-wrap: wrap; }
+nav .links a { color: var(--hero-muted); font-weight: 500; font-size: 15px; }
+.hero-body { padding: 56px 0 88px; max-width: 760px; }
+.eyebrow { font: 600 13px Inter, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #60a5fa; }
+h1 { font-size: clamp(36px, 6vw, 60px); line-height: 1.05; letter-spacing: -.025em; font-weight: 800; margin: 14px 0 20px; }
+h1 em { font-style: normal; color: var(--hero-accent); }
+.lede { font-size: 19px; color: var(--hero-muted); max-width: 620px; }
+.cta { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+.btn { display: inline-block; padding: 13px 22px; border-radius: 10px; font-weight: 600; font-size: 16px; }
+.btn:hover { text-decoration: none; opacity: .92; }
+.btn.primary { background: #4ade80; color: #06260f; }
+.btn.ghost { border: 1px solid rgba(255,255,255,.28); color: var(--hero-text); }
+section { padding: 72px 0; }
+h2 { font-size: clamp(26px, 4vw, 34px); letter-spacing: -.02em; margin-bottom: 10px; }
+.sub { color: var(--muted); max-width: 640px; margin-bottom: 36px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 24px; }
+.card .tag { display: inline-block; font: 600 12px Inter, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; margin-bottom: 14px; }
+.card h3 { font-size: 19px; margin-bottom: 8px; }
+.card p { color: var(--muted); font-size: 15px; }
+.card ul { margin-top: 12px; padding-left: 18px; color: var(--muted); font-size: 15px; }
+.project { display: grid; grid-template-columns: 1.1fr 1fr; gap: 36px; align-items: start; }
+.flow { font: 500 14px 'JetBrains Mono', monospace; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; line-height: 1.9; }
+.flow b { color: var(--text); font-weight: 500; }
+.stack { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 22px; }
+.stack span { font-size: 13px; font-weight: 600; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 5px 10px; }
+.points { list-style: none; }
+.points li { padding: 8px 0 8px 28px; position: relative; color: var(--muted); }
+.points li::before { content: "✓"; position: absolute; left: 0; color: var(--good); font-weight: 800; }
+.points li b { color: var(--text); }
+.steps { counter-reset: s; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+.step { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+.step::before { counter-increment: s; content: counter(s); display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-weight: 800; margin-bottom: 12px; }
+.step h3 { font-size: 17px; margin-bottom: 6px; }
+.step p { color: var(--muted); font-size: 15px; }
+.alt { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.hire { text-align: center; }
+.platforms { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 240px)); gap: 14px; justify-content: center; margin-top: 8px; }
+.platform { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: left; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; color: var(--text); }
+.platform:hover { text-decoration: none; border-color: var(--accent); }
+.platform b { font-size: 16px; }
+.platform span { font-size: 14px; color: var(--muted); }
+.platform.direct { background: #4ade80; border-color: #4ade80; color: #06260f; }
+.platform.direct span { color: #14532d; }
+.also { margin-top: 28px; color: var(--muted); font-size: 15px; }
+.xl { background: #fff; color: #1f2937; border-radius: 14px; border: 1px solid var(--line); overflow: hidden; max-width: 760px; }
+.xl-bar { background: #217346; color: #fff; font-weight: 600; font-size: 15px; padding: 11px 16px; display: flex; justify-content: space-between; }
+.xl-scroll { overflow-x: auto; }
+.xl table { border-collapse: collapse; width: 100%; font-size: 14px; }
+.xl th { background: #1f4e78; color: #fff; text-align: left; padding: 9px 12px; font-weight: 600; }
+.xl td { padding: 8px 12px; border-bottom: 1px solid #e5e7eb; white-space: nowrap; }
+.xl td:first-child { max-width: 360px; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 600px) { .xl td:first-child { max-width: 150px; } }
+.xl tr:nth-child(even) td { background: #f3f7fb; }
+.xl-foot { padding: 9px 16px; font-size: 13px; color: #6b7280; background: #f9fafb; }
+footer { padding: 28px 0 40px; color: var(--muted); font-size: 14px; text-align: center; }
+@media (max-width: 800px) {
+  .project { grid-template-columns: 1fr; }
+  nav .links { display: none; }
+  .hero-body { padding: 32px 0 64px; }
+  section { padding: 56px 0; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <nav>
+      <span class="brand">Ahnaf Akif</span>
+      <div class="links">
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+        <a href="#process">How I work</a>
+        <a href="#hire">Hire me</a>
+      </div>
+    </nav>
+    <div class="hero-body">
+      <div class="eyebrow">Python developer · Bangladesh</div>
+      <h1>Clean data from any website. <em>Secure</em> web apps.</h1>
+      <p class="lede">I build Python scrapers and automations that turn messy websites and files into usable data, and I test web applications for security weaknesses before attackers find them.</p>
+      <div class="cta">
+        <a class="btn primary" href="#hire">Hire me</a>
+        <a class="btn ghost" href="https://bangladesh-crime-monitor.vercel.app" target="_blank" rel="noopener">See a live project</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="services">
+    <div class="wrap">
+      <h2>What I can do for you</h2>
+      <p class="sub">Four services, each delivered with a sample or a clear scope first, so you know exactly what you're getting.</p>
+      <div class="grid">
+        <div class="card">
+          <span class="tag">Data</span>
+          <h3>Web scraping</h3>
+          <p>Product listings, directories, prices, reviews, jobs and news, delivered as Excel, CSV or JSON.</p>
+          <ul><li>Every page, not just the first</li><li>De-duplicated and formatted</li><li>English and Bengali text handled correctly</li></ul>
+        </div>
+        <div class="card">
+          <span class="tag">Automation</span>
+          <h3>Python automation</h3>
+          <p>Scripts that do the repetitive work for you, on a schedule.</p>
+          <ul><li>Websites into Google Sheets</li><li>Daily email or Telegram reports</li><li>PDF and spreadsheet cleanup</li></ul>
+        </div>
+        <div class="card">
+          <span class="tag">Security</span>
+          <h3>Web penetration testing</h3>
+          <p>Authorized testing of your web application against the OWASP Top 10.</p>
+          <ul><li>Injection, XSS, access control</li><li>Misconfigurations and exposed files</li><li>Clear report with fixes, plus a re-test</li></ul>
+        </div>
+        <div class="card">
+          <span class="tag">Compliance</span>
+          <h3>ISO 27001 readiness</h3>
+          <p>Gap assessments and internal audit support for organisations working towards ISO 27001.</p>
+          <ul><li>Gap analysis against the controls</li><li>Prioritised remediation plan</li><li>Internal audit preparation</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" class="alt">
+    <div class="wrap">
+      <h2>Featured project</h2>
+      <p class="sub">Bangladesh Crime Monitor: an open-source intelligence platform that tracks crime and security incidents across the country, built and run by me.</p>
+      <div class="project">
+        <div>
+          <div class="flow">
+            <b>News sites + public pages</b><br>
+            &nbsp;&nbsp;↓ keyword filter drops ~90% of noise<br>
+            <b>AI extraction</b> (English and Bengali)<br>
+            &nbsp;&nbsp;↓ date, location, category, summary<br>
+            <b>De-duplication</b> + location matching<br>
+            &nbsp;&nbsp;↓<br>
+            <b>PostgreSQL</b> → <b>API</b> → <b>live dashboard</b>
+          </div>
+        </div>
+        <div>
+          <ul class="points">
+            <li><b>Automated collection</b> from news sites and public pages, running on a schedule without manual work.</li>
+            <li><b>AI-powered extraction</b> that turns unstructured English and Bengali articles into structured records.</li>
+            <li><b>Duplicate-safe ingestion</b>: the pipeline can re-run the same window and never insert a record twice.</li>
+            <li><b>Security risk layer</b> mapping incidents to business sites and assets, with treatment guidance.</li>
+            <li><b>Runs on free-tier infrastructure</b> end to end.</li>
+          </ul>
+          <div class="stack"><span>Python</span><span>FastAPI</span><span>PostgreSQL</span><span>Next.js</span><span>LLM extraction</span><span>GitHub Actions</span></div>
+          <a class="btn primary" href="https://bangladesh-crime-monitor.vercel.app" target="_blank" rel="noopener">Open the live dashboard</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Sample delivery</h2>
+      <p class="sub">A 50-page product catalogue scraped into a formatted Excel file: 1,000 rows, zero duplicates, ready to filter.</p>
+      <div class="xl"><div class="xl-bar"><span>scraped_data.xlsx</span><span>✓ Clean</span></div>
+      <div class="xl-scroll"><table><tr><th>Title</th><th>Price</th><th>Stock</th><th>Rating</th></tr><tr><td>A Light in the Attic</td><td>£51.77</td><td>In stock</td><td>Three</td></tr><tr><td>Tipping the Velvet</td><td>£53.74</td><td>In stock</td><td>One</td></tr><tr><td>Soumission</td><td>£50.10</td><td>In stock</td><td>One</td></tr><tr><td>Sharp Objects</td><td>£47.82</td><td>In stock</td><td>Four</td></tr><tr><td>Sapiens: A Brief History of Humankind</td><td>£54.23</td><td>In stock</td><td>Five</td></tr><tr><td>The Requiem Red</td><td>£22.65</td><td>In stock</td><td>One</td></tr><tr><td>The Dirty Little Secrets of Getting Your Dream Job</td><td>£33.34</td><td>In stock</td><td>Four</td></tr><tr><td>The Coming Woman: A Novel Based on the Life of the Infamous Feminist, Victoria Woodhull</td><td>£17.93</td><td>In stock</td><td>Three</td></tr></table></div>
+      <div class="xl-foot">1,000 rows · 50 pages · 0 duplicates</div></div>
+    </div>
+  </section>
+
+  <section id="process" class="alt">
+    <div class="wrap">
+      <h2>How I work</h2>
+      <p class="sub">Simple, predictable, and no surprises.</p>
+      <div class="steps">
+        <div class="step"><h3>You tell me the goal</h3><p>The website, the data you need, or the system you want tested.</p></div>
+        <div class="step"><h3>I confirm the scope</h3><p>A clear quote and timeline. For security work, written authorization and scope first.</p></div>
+        <div class="step"><h3>You see a sample</h3><p>A small sample or early findings so you can check the format before the full delivery.</p></div>
+        <div class="step"><h3>Full delivery</h3><p>Clean files or a full report, plus revisions until it's right.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="hire" class="hire">
+    <div class="wrap">
+      <h2>Let's work together</h2>
+      <p class="sub" style="margin-left:auto;margin-right:auto">Hire me on the platform you already use, or contact me directly. Tell me about your project and I'll reply with exactly how I can help.</p>
+      <div class="platforms" id="platforms"></div>
+      <p class="also">Also see my work on <a href="https://github.com/jeet42-byte" target="_blank" rel="noopener">GitHub</a> and the <a href="https://bangladesh-crime-monitor.vercel.app" target="_blank" rel="noopener">live project</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Ahnaf Akif · Python, data and web security</div>
+</footer>
+
+<script>
+/* YOUR HIRE LINKS: edit only this list. Paste a link between the quotes.
+   Blank ("") entries are hidden. Email: "mailto:you@example.com"
+   WhatsApp: "https://wa.me/8801XXXXXXXXX" */
+const HIRE_LINKS = [
+  { name: "Fiverr",        note: "Fixed-price gigs",          url: "" },
+  { name: "Upwork",        note: "Hourly or fixed contracts", url: "" },
+  { name: "Freelancer",    note: "Project bids",              url: "" },
+  { name: "PeoplePerHour", note: "Hourly or fixed projects",  url: "" },
+  { name: "Contra",        note: "Commission-free projects",  url: "" },
+  { name: "LinkedIn",      note: "Connect and message",       url: "" },
+  { name: "Email me",      note: "Direct projects",           url: "", direct: true },
+  { name: "WhatsApp",      note: "Quick chat",                url: "", direct: true },
+];
+(function () {
+  const box = document.getElementById("platforms");
+  const live = HIRE_LINKS.filter(l => l.url.trim());
+  if (!live.length) {
+    box.innerHTML = '<a class="platform direct" href="https://github.com/jeet42-byte" target="_blank" rel="noopener"><b>GitHub</b><span>See my work</span></a>';
+    return;
+  }
+  live.sort((a, b) => (b.direct ? 1 : 0) - (a.direct ? 1 : 0));
+  for (const l of live) {
+    const a = document.createElement("a");
+    a.className = "platform" + (l.direct ? " direct" : "");
+    a.href = l.url.trim();
+    if (!a.href.startsWith("mailto:")) { a.target = "_blank"; a.rel = "noopener"; }
+    const b = document.createElement("b"); b.textContent = l.name;
+    const sp = document.createElement("span"); sp.textContent = l.note;
+    a.append(b, sp);
+    box.append(a);
+  }
+})();
+</script>
+</body>
+</html>
